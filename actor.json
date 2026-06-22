@@ -1,0 +1,42 @@
+{
+    "actorSpecification": 1,
+    "name": "multi-platform-job-scraper",
+    "title": "All-in-One Job Scraper (Upwork, LinkedIn, Simplify)",
+    "version": "1.2",
+    "dockerfile": "FROM apify/actor-python-playwright:3.11\nCOPY . .\nRUN pip install -r requirements.txt",
+    "inputDefinition": {
+        "schemaVersion": 1,
+        "type": "object",
+        "properties": {
+            "platform": {
+                "title": "Select Platform",
+                "type": "string",
+                "description": "Choose a specific job board or scan all of them simultaneously",
+                "editor": "select",
+                "default": "all",
+                "prefill": "all",
+                "enum": ["all", "upwork", "linkedin", "simplify"],
+                "enumTitles": ["All Platforms (Simultaneously)", "Upwork Only", "LinkedIn Only", "Simplify Only"]
+            },
+            "keyword": {
+                "title": "Search Keyword",
+                "type": "string",
+                "description": "Job niche (e.g., Python, React, UI/UX)",
+                "default": "developer"
+            },
+            "min_budget": {
+                "title": "Minimum Budget/Salary ($)",
+                "type": "integer",
+                "description": "Lowest pay range to extract (e.g., 100, 1000, 5000)",
+                "default": 100
+            },
+            "max_budget": {
+                "title": "Maximum Budget/Salary ($)",
+                "type": "integer",
+                "description": "Highest pay range to extract. Leave empty for no maximum.",
+                "default": 5000
+            }
+        },
+        "required": ["platform", "keyword"]
+    }
+}
